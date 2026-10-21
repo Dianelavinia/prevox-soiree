@@ -103,9 +103,17 @@
         p.hidden=!avec; p.querySelector('input').required=avec;
       }
       f.addEventListener('change',maj); maj();
-      f.addEventListener('submit',function(){
+      f.addEventListener('submit',function(e){
         var vient=f.querySelector('input[name="Présence"]:checked').value==='Je viens';
-        f.querySelector('input[name="_next"]').value='https://soiree.prevox.health/merci.html'+(vient?'?oui':'?non');
+        var suite='https://soiree.prevox.health/merci.html'+(vient?'?oui':'?non');
+        f.querySelector('input[name="_next"]').value=suite;
+        if(!window.fetch) return;
+        e.preventDefault();
+        var bt=f.querySelector('button[type="submit"]'); bt.disabled=true; bt.textContent='Envoi en cours…';
+        var data={}; new FormData(f).forEach(function(v,k){ if(k.charAt(0)!=='_'||k==='_subject'||k==='_template') data[k]=v; });
+        fetch('https://formsubmit.co/ajax/diane@prevox.health',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+          .then(function(){ location.href=suite; })
+          .catch(function(){ f.submit(); });
       });
     })();
   </script>
