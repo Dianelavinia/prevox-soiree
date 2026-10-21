@@ -144,7 +144,7 @@
   var q=new URLSearchParams(location.search), n=(q.get('n')||'').trim();
   var en=!/^fr/i.test(navigator.language||'fr');
   if(n){ var g=document.getElementById('greet'); g.hidden=false;
-    g.textContent=en?(n+', you are invited.'):(n+', vous êtes attendu·e.');
+    g.textContent=en?(n+', we would be delighted to welcome you.'):(n+', nous serions ravis de vous accueillir.');
     var nom=document.querySelector('input[name="Nom"]'); if(nom && !nom.value) nom.value=n; }
   var t=new Date('2026-11-27T18:00:00+01:00').getTime();
   function tick(){ var d=Math.max(0,t-Date.now()), s=Math.floor(d/1000);
