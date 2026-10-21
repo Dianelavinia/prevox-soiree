@@ -34,6 +34,19 @@
   a.secondary{ background:rgba(255,255,255,.10); color:#fff; border:1px solid rgba(255,255,255,.22); }
   .foot{ margin-top:24px; font-size:12.5px; color:#94A3B8; line-height:1.55; text-align:center; position:relative; }
   .tag{ display:block; margin-top:10px; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#27DBCB; font-weight:700; }
+  form.rsvp{ margin-top:24px; position:relative; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); border-radius:16px; padding:16px; display:grid; gap:12px; }
+  label.f{ display:grid; gap:6px; font-size:13px; color:#CBD5E1; }
+  label.f input{ font:inherit; font-size:16px; color:#fff; background:rgba(15,23,42,.6); border:1px solid rgba(255,255,255,.22); border-radius:12px; padding:12px 14px; }
+  label.f input:focus{ outline:2px solid #27DBCB; outline-offset:1px; }
+  .seg{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .seg label{ position:relative; }
+  .seg input{ position:absolute; opacity:0; }
+  .seg span{ display:flex; align-items:center; justify-content:center; min-height:46px; border-radius:12px; border:1px solid rgba(255,255,255,.22); font-size:15px; font-weight:600; color:#CBD5E1; }
+  .seg input:checked + span{ background:#27DBCB; border-color:#27DBCB; color:#0F172A; }
+  .seg input:focus-visible + span{ outline:2px solid #fff; outline-offset:2px; }
+  .hp{ position:absolute; left:-9999px; }
+  [hidden]{ display:none !important; }
+  button.btn{ border:none; font:inherit; font-size:16px; font-weight:600; cursor:pointer; width:100%; min-height:52px; border-radius:14px; }
 </style>
 </head>
 <body>
@@ -61,8 +74,39 @@
 
   <p class="prog"><b>Au programme</b> : accueil, présentation du projet par Diane de Saint Leger, démonstration de l'application, puis échange autour d'un verre.</p>
 
+  <form class="rsvp" action="https://formsubmit.co/diane@prevox.health" method="POST">
+    <div class="l">Votre réponse</div>
+    <input type="hidden" name="_subject" value="Soirée Prevox : nouvelle réponse">
+    <input type="hidden" name="_next" value="https://soiree.prevox.health/merci.html">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+    <label class="f">Prénom et nom<input type="text" name="Nom" required autocomplete="name"></label>
+    <div class="seg">
+      <label><input type="radio" name="Présence" value="Je viens" required checked><span>Je viens</span></label>
+      <label><input type="radio" name="Présence" value="Je ne viens pas"><span>Je ne viens pas</span></label>
+    </div>
+    <div class="seg" id="acc">
+      <label><input type="radio" name="Accompagné(e)" value="Seul(e)" checked><span>Seul(e)</span></label>
+      <label><input type="radio" name="Accompagné(e)" value="Accompagné(e)"><span>Accompagné(e)</span></label>
+    </div>
+    <label class="f" id="plus1" hidden>Prénom et nom de la personne<input type="text" name="Accompagnant"></label>
+    <button type="submit" class="btn primary">Envoyer ma réponse</button>
+  </form>
+  <script>
+    (function(){
+      var f=document.querySelector('form.rsvp'), acc=document.getElementById('acc'), p=document.getElementById('plus1');
+      function maj(){
+        var vient=f.querySelector('input[name="Présence"]:checked').value==='Je viens';
+        acc.hidden=!vient;
+        var avec=vient && f.querySelector('input[name="Accompagné(e)"]:checked').value==='Accompagné(e)';
+        p.hidden=!avec; p.querySelector('input').required=avec;
+      }
+      f.addEventListener('change',maj); maj();
+    })();
+  </script>
   <div class="btns">
-    <a class="btn primary" href="mailto:diane@prevox.health?subject=Soir%C3%A9e%20Prevox%20du%2027%20novembre&amp;body=Bonjour%20Diane%2C%0A%0AJe%20serai%20pr%C3%A9sent(e)%20%C3%A0%20la%20soir%C3%A9e%20Prevox%20du%20vendredi%2027%20novembre.%0A%0ANombre%20de%20personnes%20%3A%20%0A">Répondre à l'invitation</a>
+    
     <a class="btn secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Karl%20Gustav%20Brasserie%2C%2049%20rue%20Archim%C3%A8de%2C%2073800%20Sainte-H%C3%A9l%C3%A8ne-du-Lac">Itinéraire</a>
     <a class="btn secondary" href="soiree-prevox.ics">Ajouter à mon agenda</a>
   </div>
