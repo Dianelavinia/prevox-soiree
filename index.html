@@ -103,6 +103,10 @@
         p.hidden=!avec; p.querySelector('input').required=avec;
       }
       f.addEventListener('change',maj); maj();
+      f.addEventListener('submit',function(){
+        var vient=f.querySelector('input[name="Présence"]:checked').value==='Je viens';
+        f.querySelector('input[name="_next"]').value='https://soiree.prevox.health/merci.html'+(vient?'?oui':'?non');
+      });
     })();
   </script>
   <div class="btns">
