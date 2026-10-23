@@ -152,9 +152,13 @@
         e.preventDefault();
         var bt=f.querySelector('button[type="submit"]'); bt.disabled=true; bt.textContent='Envoi en cours…';
         var data={}; new FormData(f).forEach(function(v,k){ if(k.charAt(0)!=='_'||k==='_subject'||k==='_template') data[k]=v; });
-        fetch('https://formsubmit.co/ajax/diane@prevox.health',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
-          .then(function(){ location.href=suite; })
-          .catch(function(){ f.submit(); });
+        // jamais bloqué sur « Envoi en cours » : au-delà de 6 s, ou en cas d'erreur, envoi classique du formulaire
+        var fini=false, ctl=window.AbortController?new AbortController():null;
+        function secours(){ if(fini) return; fini=true; if(ctl) ctl.abort(); f.submit(); }
+        var minuterie=setTimeout(secours,6000);
+        fetch('https://formsubmit.co/ajax/diane@prevox.health',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
+          .then(function(r){ clearTimeout(minuterie); if(fini) return; if(!r.ok) return secours(); fini=true; location.href=suite; })
+          .catch(function(){ clearTimeout(minuterie); secours(); });
       });
     })();
   </script>
