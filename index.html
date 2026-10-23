@@ -81,8 +81,8 @@
 
   <div class="cd" id="cd" aria-label="Compte à rebours"><div><b id="cdj">0</b><span data-t="j">jours</span></div><div><b id="cdh">0</b><span data-t="h">heures</span></div><div><b id="cdm">0</b><span data-t="m">min</span></div><div><b id="cds">0</b><span data-t="s">s</span></div></div>
   <div class="when">
-    <div><div class="l">Quand</div><div class="v">Vendredi 27 novembre 2026<span>à partir de 18h</span></div></div>
-    <div><div class="l">Où</div><div class="v">Karl Gustav Brasserie (KGB)<span>Parc d'activités Alpespace<br>49 rue Archimède<br>73800 Sainte-Hélène-du-Lac</span></div></div>
+    <div><div class="l">Quand</div><div class="v">Vendredi 20 novembre 2026<span>à partir de 18h</span></div></div>
+    <div><div class="l">Où</div><div class="v">Karl Gustav Brasserie (KGB)<span>Parc d'activités Alpespace<br>49 rue Archimède<br>73800 Sainte-Hélène-du-Lac<br>Parking sur place</span></div></div>
   </div>
 
   <p class="prog"><b>Au programme</b> : accueil, présentation du projet par Diane de Saint Leger, démonstration de l'application, puis échange autour d'un verre.</p>
@@ -137,7 +137,7 @@
     <a class="btn secondary" href="soiree-prevox.ics">Ajouter à mon agenda</a>
   </div>
 
-  <p class="foot">Réponse souhaitée avant le 20 novembre<br>diane@prevox.health<br>Invitation personnelle, merci de ne pas la transférer.<span class="tag">Prévoir · Prévenir · Protéger</span></p>
+  <p class="foot">Réponse souhaitée avant le 13 novembre<br>diane@prevox.health<br>Invitation personnelle, merci de ne pas la transférer.<span class="tag">Prévoir · Prévenir · Protéger</span></p>
 </main>
 <script>
 (function(){
@@ -146,7 +146,7 @@
   if(n){ var g=document.getElementById('greet'); g.hidden=false;
     g.textContent=en?(n+', we would be delighted to welcome you.'):(n+', nous serions ravis de vous accueillir.');
     var nom=document.querySelector('input[name="Nom"]'); if(nom && !nom.value) nom.value=n; }
-  var t=new Date('2026-11-27T18:00:00+01:00').getTime();
+  var t=new Date('2026-11-20T18:00:00+01:00').getTime();
   function tick(){ var d=Math.max(0,t-Date.now()), s=Math.floor(d/1000);
     document.getElementById('cdj').textContent=Math.floor(s/86400);
     document.getElementById('cdh').textContent=Math.floor(s%86400/3600);
@@ -158,7 +158,7 @@
   var T=[['.only','By invitation only'],['.kicker','Launch evening'],['h1','The patient\'s record arrives before the patient.'],
     ['.sub','You are invited to an exclusive preview of <b>Prevox</b>: the project, its vision, and a live demo of the app.'],
     ['[data-t=j]','days'],['[data-t=h]','hours'],['[data-t=m]','min'],['[data-t=s]','sec'],
-    ['.when > div:nth-child(1) .l','When'],['.when > div:nth-child(1) .v','Friday 27 November 2026<span>from 6 pm</span>'],['.when > div:nth-child(2) .l','Where'],
+    ['.when > div:nth-child(1) .l','When'],['.when > div:nth-child(1) .v','Friday 20 November 2026<span>from 6 pm</span>'],['.when > div:nth-child(2) .v','Karl Gustav Brasserie (KGB)<span>Parc d\'activités Alpespace<br>49 rue Archimède<br>73800 Sainte-Hélène-du-Lac<br>On-site parking</span>'],['.when > div:nth-child(2) .l','Where'],
     ['.prog','<b>Programme</b>: welcome, presentation of the project by Diane de Saint Leger, live demo of the app, then drinks.'],
     ['[data-i=apercu]','A first look'],['form.rsvp > .l','Your reply'],
     ['button[type=submit]','Send my reply'],['.btns a:nth-child(1)','Directions'],['.btns a:nth-child(2)','Add to my calendar']];
@@ -167,7 +167,7 @@
   if(L[1]) L[1].firstChild.nodeValue='Name of your guest';
   var R=[['Je viens','I will attend'],['Je ne viens pas','I cannot attend'],['Seul(e)','On my own'],['Accompagné(e)','With a guest']];
   document.querySelectorAll('.seg span').forEach(function(sp){ R.forEach(function(r){ if(sp.textContent===r[0]) sp.textContent=r[1]; }); });
-  var f=document.querySelector('.foot'); if(f) f.innerHTML='Please reply by 20 November<br>diane@prevox.health<br>Personal invitation, please do not forward.<span class="tag">Prévoir · Prévenir · Protéger</span>';
+  var f=document.querySelector('.foot'); if(f) f.innerHTML='Please reply by 13 November<br>diane@prevox.health<br>Personal invitation, please do not forward.<span class="tag">Prévoir · Prévenir · Protéger</span>';
 })();
 </script>
 </body>
