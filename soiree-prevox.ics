@@ -6,14 +6,14 @@ METHOD:PUBLISH
 BEGIN:VEVENT
 UID:prevox-soiree-presentation-20261120@prevox.health
 DTSTAMP:20261021T120000Z
-DTSTART;TZID=Europe/Paris:20261120T180000
+DTSTART;TZID=Europe/Paris:20261120T183000
 DTEND;TZID=Europe/Paris:20261120T210000
 SUMMARY:Soirée de présentation Prevox
 LOCATION:Karl Gustav Brasserie (KGB)\, Parc d'activités Alpespace\, 49 rue Archimède\, 73800 Sainte-Hélène-du-Lac
 DESCRIPTION:Présentation du projet Prevox\, démonstration de l'application\, puis échange autour d'un verre. Sur invitation.
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Soirée Prevox ce soir à 18h
+DESCRIPTION:Soirée Prevox ce soir à 18h30
 TRIGGER:-PT3H
 END:VALARM
 END:VEVENT
