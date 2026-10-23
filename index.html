@@ -28,6 +28,9 @@
   .v span{ display:block; font-size:14.5px; font-weight:400; color:#CBD5E1; margin-top:2px; }
   .prog{ margin-top:18px; font-size:14.5px; color:#CBD5E1; line-height:1.6; position:relative; }
   .prog b{ color:#fff; font-weight:600; }
+  .prog ol{ list-style:none; display:grid; gap:7px; margin:4px 0 0; padding:0; }
+  .prog li{ display:flex; align-items:baseline; gap:10px; font-size:15.5px; font-weight:600; color:#fff; line-height:1.3; }
+  .prog li i{ font-style:normal; font-size:12px; font-weight:700; color:#27DBCB; min-width:10px; }
   .btns{ margin-top:24px; display:grid; gap:10px; position:relative; }
   a.btn{ display:flex; align-items:center; justify-content:center; gap:8px; min-height:52px; border-radius:14px; font-size:16px; font-weight:600; text-decoration:none; }
   a.primary, button.primary{ background:#27DBCB; color:#0F172A; }
@@ -85,7 +88,7 @@
     <div><div class="l">Où</div><div class="v">Karl Gustav Brasserie (KGB)<span>Parc d'activités Alpespace<br>49 rue Archimède<br>73800 Sainte-Hélène-du-Lac<br>Parking sur place</span></div></div>
   </div>
 
-  <p class="prog"><b>Au programme</b> : accueil, présentation du projet par Diane de Saint Leger, démonstration de l'application, puis échange autour d'un verre.</p>
+  <div class="prog"><div class="l">Au programme</div><ol><li><i>1</i>Accueil</li><li><i>2</i>Présentation du projet</li><li><i>3</i>Démonstration de l'application</li><li><i>4</i>Échange autour d'un verre</li></ol></div>
 
   <div class="apercu"><div class="l" data-i="apercu">Un avant-goût</div><video src="apercu.mp4" poster="apercu.jpg" muted playsinline loop autoplay preload="metadata"></video></div>
   <form class="rsvp" action="https://formsubmit.co/diane@prevox.health" method="POST">
