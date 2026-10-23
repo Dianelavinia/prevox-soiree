@@ -19,7 +19,7 @@
   .hero .txt{ flex:1; }
   .robot{ width:118px; flex:none; margin-right:-8px; }
   .kicker{ font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#27DBCB; }
-  h1{ font-size:31px; line-height:1.1; letter-spacing:-0.03em; margin:10px 0 0; }
+  h1{ font-size:27px; line-height:1.1; letter-spacing:-0.03em; margin:10px 0 0; }
   .sub{ font-size:15.5px; line-height:1.5; color:#CBD5E1; margin-top:18px; position:relative; }
   .sub b{ color:#fff; font-weight:600; }
   .when{ margin-top:22px; border-top:1px solid rgba(255,255,255,.18); border-bottom:1px solid rgba(255,255,255,.18); padding:18px 0; display:grid; grid-template-columns:1fr 1.15fr; gap:16px; position:relative; }
@@ -31,9 +31,10 @@
   .v span{ display:block; font-size:14.5px; font-weight:400; color:#CBD5E1; margin-top:2px; }
   .prog{ margin-top:18px; font-size:14.5px; color:#CBD5E1; line-height:1.6; position:relative; }
   .prog b{ color:#fff; font-weight:600; }
-  .prog ol{ list-style:none; display:grid; gap:7px; margin:4px 0 0; padding:0; }
-  .prog li{ display:flex; align-items:baseline; gap:10px; font-size:15.5px; font-weight:600; color:#fff; line-height:1.3; }
-  .prog li i{ font-style:normal; font-size:12px; font-weight:700; color:#27DBCB; min-width:10px; }
+  .prog ol{ list-style:none; display:grid; gap:14px; margin:12px 0 0; padding:0; position:relative; }
+  .prog ol::before{ content:""; position:absolute; left:13px; top:14px; bottom:14px; width:2px; background:rgba(39,219,203,.35); }
+  .prog li{ display:flex; align-items:center; gap:14px; font-size:16.5px; font-weight:600; color:#fff; line-height:1.3; position:relative; }
+  .prog li i{ font-style:normal; flex:none; width:28px; height:28px; border-radius:50%; background:#27DBCB; color:#0F172A; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; box-shadow:0 0 0 4px rgba(39,219,203,.14); }
   .btns{ margin-top:24px; display:grid; gap:10px; position:relative; }
   a.btn{ display:flex; align-items:center; justify-content:center; gap:8px; min-height:52px; border-radius:14px; font-size:16px; font-weight:600; text-decoration:none; }
   a.primary, button.primary{ background:#27DBCB; color:#0F172A; }
@@ -48,6 +49,7 @@
   .seg label{ position:relative; }
   .seg input{ position:absolute; opacity:0; }
   .seg span{ display:flex; align-items:center; justify-content:center; min-height:46px; border-radius:12px; border:1px solid rgba(255,255,255,.22); font-size:15px; font-weight:600; color:#CBD5E1; }
+  .seg.trio{ grid-template-columns:1fr; }
   .seg input:checked + span{ background:#27DBCB; border-color:#27DBCB; color:#0F172A; }
   .seg input:focus-visible + span{ outline:2px solid #fff; outline-offset:2px; }
   .hp{ position:absolute; left:-9999px; }
@@ -58,12 +60,18 @@
   .card > *{ animation:rise .7s ease both; } .card > *:nth-child(3){ animation-delay:.1s; } .card > *:nth-child(4){ animation-delay:.2s; } .card > *:nth-child(5){ animation-delay:.3s; }
   .robot{ animation:wave 2.2s ease-in-out .8s 1; transform-origin:50% 90%; }
   @media (prefers-reduced-motion: reduce){ .card > *, .robot{ animation:none !important; } }
-  .greet{ font-size:16px; color:#27DBCB; font-weight:600; margin-top:22px; position:relative; }
+  .greet{ margin-top:22px; position:relative; }
+  .greet strong{ display:block; font-size:25px; font-weight:700; color:#fff; letter-spacing:-0.02em; line-height:1.15; }
+  .greet span{ display:block; font-size:15px; color:#CBD5E1; margin-top:3px; }
   .cd{ margin-top:18px; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; position:relative; }
   .cd div{ background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:9px 4px; text-align:center; }
   .cd b{ display:block; font-size:22px; font-weight:700; letter-spacing:-0.02em; } .cd span{ font-size:10.5px; color:#94A3B8; text-transform:uppercase; letter-spacing:.08em; }
-  .apercu{ margin-top:22px; position:relative; } .apercu video{ width:100%; border-radius:14px; display:block; background:#0F172A; }
-  .apercu .l{ margin-bottom:8px; }
+  .apercu{ margin-top:24px; position:relative; }
+  .apercu .l{ margin-bottom:4px; }
+  .apercu .t{ font-size:16.5px; font-weight:600; color:#fff; margin-bottom:10px; }
+  .apercu .fr{ position:relative; border:1px solid rgba(39,219,203,.45); border-radius:16px; padding:6px; background:rgba(15,23,42,.65); box-shadow:0 10px 30px rgba(0,0,0,.35); cursor:pointer; }
+  .apercu video{ width:100%; border-radius:11px; display:block; background:#0F172A; }
+  .apercu .zoom{ position:absolute; right:14px; bottom:14px; font-size:11.5px; font-weight:600; color:#0F172A; background:#27DBCB; border-radius:999px; padding:5px 10px; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -83,7 +91,7 @@
   </div>
 
   <p class="greet" id="greet" hidden></p>
-  <p class="sub">Vous êtes invité(e) à découvrir <b>Prevox</b> en avant-première : le projet, sa vision, et une démonstration de l'application.</p>
+  <p class="sub">Découvrez <b>Prevox</b> en avant-première : le projet, sa vision, et une démonstration de l'application.</p>
 
   <div class="cd" id="cd" aria-label="Compte à rebours"><div><b id="cdj">0</b><span data-t="j">jours</span></div><div><b id="cdh">0</b><span data-t="h">heures</span></div><div><b id="cdm">0</b><span data-t="m">min</span></div><div><b id="cds">0</b><span data-t="s">s</span></div></div>
   <div class="when">
@@ -93,7 +101,7 @@
 
   <div class="prog"><div class="l">Au programme</div><ol><li><i>1</i>Accueil</li><li><i>2</i>Présentation du projet</li><li><i>3</i>Démonstration de l'application</li><li><i>4</i>Échange autour d'un verre</li></ol></div>
 
-  <div class="apercu"><div class="l" data-i="apercu">Un avant-goût</div><video src="apercu.mp4" poster="apercu.jpg" muted playsinline loop autoplay preload="metadata"></video></div>
+  <div class="apercu"><div class="l" data-i="apercu">Un avant-goût</div><div class="t" data-i="apercu-t">10 secondes de Prevox : la fiche arrive avant le patient</div><div class="fr" id="fr"><video src="apercu.mp4" poster="apercu.jpg" muted playsinline loop autoplay preload="metadata"></video><span class="zoom" data-i="zoom">Toucher pour agrandir</span></div></div>
   <form class="rsvp" action="https://formsubmit.co/diane@prevox.health" method="POST">
     <div class="l">Votre réponse</div>
     <input type="hidden" name="_subject" value="Soirée Prevox : nouvelle réponse">
@@ -116,15 +124,28 @@
   <script>
     (function(){
       var f=document.querySelector('form.rsvp'), acc=document.getElementById('acc'), p=document.getElementById('plus1');
+      // invitation de couple (« X et Y ») : l'invitation couvre déjà les deux, pas de « + 1 »
+      var nn=(new URLSearchParams(location.search).get('n')||'').trim(), duo=/\s(et|and)\s/i.test(nn);
+      var inv=document.createElement('input'); inv.type='hidden'; inv.name='Invitation'; inv.value=nn||'(lien général)'; f.appendChild(inv);
+      var NON=['Je ne viens pas','Nous ne venons pas'];
+      if(duo){
+        var seg=f.querySelector('input[name="Présence"]').closest('.seg'); seg.classList.add('trio');
+        seg.innerHTML=['Nous venons à deux','Un seul de nous viendra','Nous ne venons pas'].map(function(v,i){
+          return '<label><input type="radio" name="Présence" value="'+v+'"'+(i?'':' required checked')+'><span>'+v+'</span></label>'; }).join('');
+        acc.remove(); p.remove(); acc=null; p=null;
+        f.querySelector('label.f').firstChild.nodeValue='Vos prénoms et nom';
+      }
+      function vientIl(){ return NON.indexOf(f.querySelector('input[name="Présence"]:checked').value)<0; }
       function maj(){
-        var vient=f.querySelector('input[name="Présence"]:checked').value==='Je viens';
+        if(!acc) return;
+        var vient=vientIl();
         acc.hidden=!vient;
         var avec=vient && f.querySelector('input[name="Accompagné(e)"]:checked').value==='Accompagné(e)';
         p.hidden=!avec; p.querySelector('input').required=avec;
       }
       f.addEventListener('change',maj); maj();
       f.addEventListener('submit',function(e){
-        var vient=f.querySelector('input[name="Présence"]:checked').value==='Je viens';
+        var vient=vientIl();
         var suite='https://soiree.prevox.health/merci.html'+(vient?'?oui':'?non');
         f.querySelector('input[name="_next"]').value=suite;
         if(!window.fetch) return;
@@ -150,7 +171,8 @@
   var q=new URLSearchParams(location.search), n=(q.get('n')||'').trim();
   var en=!/^fr/i.test(navigator.language||'fr');
   if(n){ var g=document.getElementById('greet'); g.hidden=false;
-    g.textContent=en?(n+', we would be delighted to welcome you.'):(n+', nous serions ravis de vous accueillir.');
+    var st=document.createElement('strong'), sp=document.createElement('span'); st.textContent=n+',';
+    sp.textContent=en?'we are delighted to invite you':'nous avons le plaisir de vous convier'; g.appendChild(st); g.appendChild(sp);
     var nom=document.querySelector('input[name="Nom"]'); if(nom && !nom.value) nom.value=n; }
   var t=new Date('2026-11-20T18:30:00+01:00').getTime();
   function tick(){ var d=Math.max(0,t-Date.now()), s=Math.floor(d/1000);
@@ -159,19 +181,21 @@
     document.getElementById('cdm').textContent=Math.floor(s%3600/60);
     document.getElementById('cds').textContent=s%60; }
   tick(); setInterval(tick,1000);
+  var fr=document.getElementById('fr'), vd=fr&&fr.querySelector('video');
+  if(fr) fr.addEventListener('click',function(){ if(vd.webkitEnterFullscreen) vd.webkitEnterFullscreen(); else if(vd.requestFullscreen) vd.requestFullscreen(); vd.play(); });
   if(!en) return;
   document.documentElement.lang='en';
   var T=[['.only','By invitation only'],['.kicker','Launch evening'],['h1','The patient\'s record arrives before the patient.'],
-    ['.sub','You are invited to an exclusive preview of <b>Prevox</b>: the project, its vision, and a live demo of the app.'],
+    ['.sub','Discover <b>Prevox</b> ahead of its launch: the project, its vision, and a live demo of the app.'],
     ['[data-t=j]','days'],['[data-t=h]','hours'],['[data-t=m]','min'],['[data-t=s]','sec'],
     ['.when > div:nth-child(1) .l','When'],['.when > div:nth-child(1) .v','Friday 20 November 2026<span>from 6:30 pm</span>'],['.when > div:nth-child(2) .v','Karl Gustav Brasserie (KGB)<span>49 rue Archimède, Alpespace<br>73800 Sainte-Hélène-du-Lac<br>On-site parking</span>'],['.when > div:nth-child(2) .l','Where'],
-    ['.prog','<b>Programme</b>: welcome, presentation of the project by Diane de Saint Leger, live demo of the app, then drinks.'],
-    ['[data-i=apercu]','A first look'],['form.rsvp > .l','Your reply'],
+    ['.prog','<div class="l">Programme</div><ol><li><i>1</i>Welcome</li><li><i>2</i>Presentation of the project</li><li><i>3</i>Live demo of the app</li><li><i>4</i>Drinks and conversation</li></ol>'],
+    ['[data-i=apercu]','A first look'],['[data-i=apercu-t]','10 seconds of Prevox: the record arrives before the patient'],['[data-i=zoom]','Tap to enlarge'],['form.rsvp > .l','Your reply'],
     ['button[type=submit]','Send my reply'],['.btns a:nth-child(1)','Directions'],['.btns a:nth-child(2)','Add to my calendar']];
   T.forEach(function(x){ var e=document.querySelector(x[0]); if(e) e.innerHTML=x[1]; });
-  var L=document.querySelectorAll('label.f'); if(L[0]) L[0].firstChild.nodeValue='First and last name';
+  var L=document.querySelectorAll('label.f'); if(L[0]) L[0].firstChild.nodeValue=(L[0].firstChild.nodeValue==='Vos prénoms et nom'?'Your names':'First and last name');
   if(L[1]) L[1].firstChild.nodeValue='Name of your guest';
-  var R=[['Je viens','I will attend'],['Je ne viens pas','I cannot attend'],['Seul(e)','On my own'],['Accompagné(e)','With a guest']];
+  var R=[['Nous venons à deux','We are both coming'],['Un seul de nous viendra','Only one of us will come'],['Nous ne venons pas','We cannot attend'],['Je viens','I will attend'],['Je ne viens pas','I cannot attend'],['Seul(e)','On my own'],['Accompagné(e)','With a guest']];
   document.querySelectorAll('.seg span').forEach(function(sp){ R.forEach(function(r){ if(sp.textContent===r[0]) sp.textContent=r[1]; }); });
   var f=document.querySelector('.foot'); if(f) f.innerHTML='Please reply by 13 November<br>diane@prevox.health<br>Personal invitation, please do not forward.<span class="tag">Prévoir · Prévenir · Protéger</span>';
 })();
