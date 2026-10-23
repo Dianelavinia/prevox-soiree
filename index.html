@@ -22,7 +22,10 @@
   h1{ font-size:31px; line-height:1.1; letter-spacing:-0.03em; margin:10px 0 0; }
   .sub{ font-size:15.5px; line-height:1.5; color:#CBD5E1; margin-top:18px; position:relative; }
   .sub b{ color:#fff; font-weight:600; }
-  .when{ margin-top:22px; border-top:1px solid rgba(255,255,255,.18); border-bottom:1px solid rgba(255,255,255,.18); padding:18px 0; display:grid; gap:16px; position:relative; }
+  .when{ margin-top:22px; border-top:1px solid rgba(255,255,255,.18); border-bottom:1px solid rgba(255,255,255,.18); padding:18px 0; display:grid; grid-template-columns:1fr 1.15fr; gap:16px; position:relative; }
+  .when .v{ font-size:16.5px; }
+  .when .v span{ font-size:13px; color:#94A3B8; line-height:1.45; margin-top:5px; }
+  @media (max-width:340px){ .when{ grid-template-columns:1fr; } }
   .l{ font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#27DBCB; margin-bottom:5px; }
   .v{ font-size:18px; font-weight:600; line-height:1.3; }
   .v span{ display:block; font-size:14.5px; font-weight:400; color:#CBD5E1; margin-top:2px; }
@@ -85,7 +88,7 @@
   <div class="cd" id="cd" aria-label="Compte à rebours"><div><b id="cdj">0</b><span data-t="j">jours</span></div><div><b id="cdh">0</b><span data-t="h">heures</span></div><div><b id="cdm">0</b><span data-t="m">min</span></div><div><b id="cds">0</b><span data-t="s">s</span></div></div>
   <div class="when">
     <div><div class="l">Quand</div><div class="v">Vendredi 20 novembre 2026<span>à partir de 18h30</span></div></div>
-    <div><div class="l">Où</div><div class="v">Karl Gustav Brasserie (KGB)<span>Parc d'activités Alpespace<br>49 rue Archimède<br>73800 Sainte-Hélène-du-Lac<br>Parking sur place</span></div></div>
+    <div><div class="l">Où</div><div class="v">Karl Gustav Brasserie (KGB)<span>49 rue Archimède, Alpespace<br>73800 Sainte-Hélène-du-Lac<br>Parking sur place</span></div></div>
   </div>
 
   <div class="prog"><div class="l">Au programme</div><ol><li><i>1</i>Accueil</li><li><i>2</i>Présentation du projet</li><li><i>3</i>Démonstration de l'application</li><li><i>4</i>Échange autour d'un verre</li></ol></div>
@@ -161,7 +164,7 @@
   var T=[['.only','By invitation only'],['.kicker','Launch evening'],['h1','The patient\'s record arrives before the patient.'],
     ['.sub','You are invited to an exclusive preview of <b>Prevox</b>: the project, its vision, and a live demo of the app.'],
     ['[data-t=j]','days'],['[data-t=h]','hours'],['[data-t=m]','min'],['[data-t=s]','sec'],
-    ['.when > div:nth-child(1) .l','When'],['.when > div:nth-child(1) .v','Friday 20 November 2026<span>from 6:30 pm</span>'],['.when > div:nth-child(2) .v','Karl Gustav Brasserie (KGB)<span>Parc d\'activités Alpespace<br>49 rue Archimède<br>73800 Sainte-Hélène-du-Lac<br>On-site parking</span>'],['.when > div:nth-child(2) .l','Where'],
+    ['.when > div:nth-child(1) .l','When'],['.when > div:nth-child(1) .v','Friday 20 November 2026<span>from 6:30 pm</span>'],['.when > div:nth-child(2) .v','Karl Gustav Brasserie (KGB)<span>49 rue Archimède, Alpespace<br>73800 Sainte-Hélène-du-Lac<br>On-site parking</span>'],['.when > div:nth-child(2) .l','Where'],
     ['.prog','<b>Programme</b>: welcome, presentation of the project by Diane de Saint Leger, live demo of the app, then drinks.'],
     ['[data-i=apercu]','A first look'],['form.rsvp > .l','Your reply'],
     ['button[type=submit]','Send my reply'],['.btns a:nth-child(1)','Directions'],['.btns a:nth-child(2)','Add to my calendar']];
