@@ -54,6 +54,8 @@
   .seg input:focus-visible + span{ outline:2px solid #fff; outline-offset:2px; }
   .hp{ position:absolute; left:-9999px; }
   [hidden]{ display:none !important; }
+  .secours{ display:grid; gap:10px; }
+  .secours p{ font-size:14.5px; line-height:1.5; color:#CBD5E1; }
   button.btn{ border:none; font:inherit; font-size:16px; font-weight:600; cursor:pointer; width:100%; min-height:52px; border-radius:14px; }
   @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
   @keyframes wave{ 0%,100%{ transform:rotate(0); } 20%{ transform:rotate(-8deg); } 40%{ transform:rotate(6deg); } 60%{ transform:rotate(-4deg); } }
@@ -120,6 +122,11 @@
     </div>
     <label class="f" id="plus1" hidden>Prénom et nom de la personne<input type="text" name="Accompagnant"></label>
     <button type="submit" class="btn primary">Envoyer ma réponse</button>
+    <div class="secours" id="secours" hidden>
+      <p data-i="sec-t">L'envoi n'a pas abouti. Votre réponse est prête : un geste suffit pour l'envoyer à Diane par courriel.</p>
+      <a class="btn primary" id="sec-mail" href="mailto:diane@prevox.health" data-i="sec-b">Envoyer ma réponse par courriel</a>
+      <a class="btn secondary" href="#" id="sec-re" data-i="sec-r">Réessayer</a>
+    </div>
   </form>
   <script>
     (function(){
@@ -150,14 +157,21 @@
         f.querySelector('input[name="_next"]').value=suite;
         if(!window.fetch) return;
         e.preventDefault();
-        var bt=f.querySelector('button[type="submit"]'); bt.disabled=true; bt.textContent='Envoi en cours…';
+        var bt=f.querySelector('button[type="submit"]'); if(!bt.getAttribute('data-txt')) bt.setAttribute('data-txt',bt.textContent); bt.disabled=true; bt.textContent=/^fr/i.test(navigator.language||'fr')?'Envoi en cours…':'Sending…';
         var data={}; new FormData(f).forEach(function(v,k){ if(k.charAt(0)!=='_'||k==='_subject'||k==='_template') data[k]=v; });
-        // jamais bloqué sur « Envoi en cours » : au-delà de 6 s, ou en cas d'erreur, envoi classique du formulaire
+        // jamais bloqué ni perdu : au-delà de 10 s, en cas d'erreur ou de service en panne (FormSubmit 521 le 30/10),
+        // la réponse est proposée par courriel, toute prête, au lieu de la page d'erreur du service
         var fini=false, ctl=window.AbortController?new AbortController():null;
-        function secours(){ if(fini) return; fini=true; if(ctl) ctl.abort(); f.submit(); }
-        var minuterie=setTimeout(secours,6000);
+        function secours(){ if(fini) return; fini=true; if(ctl) ctl.abort();
+          var en=!/^fr/i.test(navigator.language||'fr'), L=[];
+          Object.keys(data).forEach(function(k){ if(k.charAt(0)!=='_' && data[k]) L.push(k+' : '+data[k]); });
+          document.getElementById('sec-mail').href='mailto:diane@prevox.health?subject='+encodeURIComponent(en?'Prevox evening: my reply':'Soirée Prevox : ma réponse')+'&body='+encodeURIComponent(L.join('\n'));
+          bt.hidden=true; document.getElementById('secours').hidden=false; }
+        document.getElementById('sec-re').onclick=function(ev){ ev.preventDefault(); document.getElementById('secours').hidden=true; bt.hidden=false; bt.disabled=false; bt.textContent=bt.getAttribute('data-txt'); };
+        var minuterie=setTimeout(secours,10000);
         fetch('https://formsubmit.co/ajax/diane@prevox.health',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
-          .then(function(r){ clearTimeout(minuterie); if(fini) return; if(!r.ok) return secours(); fini=true; location.href=suite; })
+          .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+          .then(function(j){ clearTimeout(minuterie); if(fini) return; if(!j || String(j.success)==='false') return secours(); fini=true; location.href=suite; })
           .catch(function(){ clearTimeout(minuterie); secours(); });
       });
     })();
@@ -195,7 +209,7 @@
     ['.when > div:nth-child(1) .l','When'],['.when > div:nth-child(1) .v','Friday 20 November 2026<span>from 6:30 pm</span>'],['.when > div:nth-child(2) .v','Karl Gustav Brasserie (KGB)<span>49 rue Archimède, Alpespace<br>73800 Sainte-Hélène-du-Lac<br>On-site parking</span>'],['.when > div:nth-child(2) .l','Where'],
     ['.prog','<div class="l">Programme</div><ol><li><i>1</i>Welcome</li><li><i>2</i>Presentation of the project</li><li><i>3</i>Live demo of the app</li><li><i>4</i>Drinks and conversation</li></ol>'],
     ['[data-i=apercu]','A first look'],['[data-i=apercu-t]','10 seconds of Prevox: the record arrives before the patient'],['[data-i=zoom]','Tap to enlarge'],['form.rsvp > .l','Your reply'],
-    ['button[type=submit]','Send my reply'],['.btns a:nth-child(1)','Directions'],['.btns a:nth-child(2)','Add to my calendar']];
+    ['button[type=submit]','Send my reply'],['[data-i=sec-t]','Your reply could not be sent. It is ready: one tap sends it to Diane by email.'],['[data-i=sec-b]','Send my reply by email'],['[data-i=sec-r]','Try again'],['.btns a:nth-child(1)','Directions'],['.btns a:nth-child(2)','Add to my calendar']];
   T.forEach(function(x){ var e=document.querySelector(x[0]); if(e) e.innerHTML=x[1]; });
   var L=document.querySelectorAll('label.f'); if(L[0]) L[0].firstChild.nodeValue=(L[0].firstChild.nodeValue==='Vos prénoms et nom'?'Your names':'First and last name');
   if(L[1]) L[1].firstChild.nodeValue='Name of your guest';
