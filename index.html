@@ -104,13 +104,13 @@
   <div class="prog"><div class="l">Au programme</div><ol><li><i>1</i>Accueil</li><li><i>2</i>Présentation du projet</li><li><i>3</i>Démonstration de l'application</li><li><i>4</i>Échange autour d'un verre</li></ol></div>
 
   <div class="apercu"><div class="l" data-i="apercu">Un avant-goût</div><div class="t" data-i="apercu-t">10 secondes de Prevox : la fiche arrive avant le patient</div><div class="fr" id="fr"><video src="apercu.mp4" poster="apercu.jpg" muted playsinline loop autoplay preload="metadata"></video><span class="zoom" data-i="zoom">Toucher pour agrandir</span></div></div>
-  <form class="rsvp" action="https://formsubmit.co/diane@prevox.health" method="POST">
+  <form class="rsvp" action="https://api.web3forms.com/submit" method="POST">
     <div class="l">Votre réponse</div>
-    <input type="hidden" name="_subject" value="Soirée Prevox : nouvelle réponse">
-    <input type="hidden" name="_next" value="https://soiree.prevox.health/merci.html">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-    <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+    <input type="hidden" name="access_key" value="87a0b3a1-69a3-42cd-bca7-02a80382ccb0">
+    <input type="hidden" name="subject" value="Soirée Prevox : nouvelle réponse">
+    <input type="hidden" name="from_name" value="Invitation soirée Prevox">
+    <input type="hidden" name="redirect" value="https://soiree.prevox.health/merci.html">
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
     <label class="f">Prénom et nom<input type="text" name="Nom" required autocomplete="name"></label>
     <div class="seg">
       <label><input type="radio" name="Présence" value="Je viens" required checked><span>Je viens</span></label>
@@ -154,24 +154,25 @@
       f.addEventListener('submit',function(e){
         var vient=vientIl();
         var suite='https://soiree.prevox.health/merci.html'+(vient?'?oui':'?non');
-        f.querySelector('input[name="_next"]').value=suite;
+        f.querySelector('input[name="redirect"]').value=suite;
         if(!window.fetch) return;
         e.preventDefault();
         var bt=f.querySelector('button[type="submit"]'); if(!bt.getAttribute('data-txt')) bt.setAttribute('data-txt',bt.textContent); bt.disabled=true; bt.textContent=/^fr/i.test(navigator.language||'fr')?'Envoi en cours…':'Sending…';
-        var data={}; new FormData(f).forEach(function(v,k){ if(k.charAt(0)!=='_'||k==='_subject'||k==='_template') data[k]=v; });
-        // jamais bloqué ni perdu : au-delà de 10 s, en cas d'erreur ou de service en panne (FormSubmit 521 le 30/10),
+        var data={}; new FormData(f).forEach(function(v,k){ if(k!=='redirect') data[k]=v; });
+        // réponses reçues par Web3Forms depuis le 30/10 (FormSubmit en panne, erreur 521).
+        // jamais bloqué ni perdu : au-delà de 10 s, en cas d'erreur ou de service en panne,
         // la réponse est proposée par courriel, toute prête, au lieu de la page d'erreur du service
         var fini=false, ctl=window.AbortController?new AbortController():null;
         function secours(){ if(fini) return; fini=true; if(ctl) ctl.abort();
           var en=!/^fr/i.test(navigator.language||'fr'), L=[];
-          Object.keys(data).forEach(function(k){ if(k.charAt(0)!=='_' && data[k]) L.push(k+' : '+data[k]); });
+          ['Nom','Présence','Accompagné(e)','Accompagnant','Invitation'].forEach(function(k){ if(data[k]) L.push(k+' : '+data[k]); });
           document.getElementById('sec-mail').href='mailto:diane@prevox.health?subject='+encodeURIComponent(en?'Prevox evening: my reply':'Soirée Prevox : ma réponse')+'&body='+encodeURIComponent(L.join('\n'));
           bt.hidden=true; document.getElementById('secours').hidden=false; }
         document.getElementById('sec-re').onclick=function(ev){ ev.preventDefault(); document.getElementById('secours').hidden=true; bt.hidden=false; bt.disabled=false; bt.textContent=bt.getAttribute('data-txt'); };
         var minuterie=setTimeout(secours,10000);
-        fetch('https://formsubmit.co/ajax/diane@prevox.health',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
+        fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
           .then(function(r){ if(!r.ok) throw 0; return r.json(); })
-          .then(function(j){ clearTimeout(minuterie); if(fini) return; if(!j || String(j.success)==='false') return secours(); fini=true; location.href=suite; })
+          .then(function(j){ clearTimeout(minuterie); if(fini) return; if(!j || j.success!==true) return secours(); fini=true; location.href=suite; })
           .catch(function(){ clearTimeout(minuterie); secours(); });
       });
     })();
